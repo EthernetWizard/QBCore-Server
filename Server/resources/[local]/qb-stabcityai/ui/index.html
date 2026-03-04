@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="background:transparent;margin:0;padding:0;pointer-events:none;overflow:hidden;">
+<script>
+// Audio queue — prevents agents from talking over each other
+var audioQueue = [];
+var isPlaying = false;
+
+function playNext() {
+    if (audioQueue.length === 0) {
+        isPlaying = false;
+        return;
+    }
+    isPlaying = true;
+    var entry = audioQueue.shift();
+    var audio = new Audio(entry.url);
+    audio.volume = 1.0;
+    audio.onended = function() {
+        // Notify Lua that this clip finished (for timing responder lines)
+        if (entry.id) {
+            fetch('https://qb-stabcityai/audioFinished', {
+                method: 'POST',
+                body: JSON.stringify({ id: entry.id })
+            }).catch(function() {});
+        }
+        playNext();
+    };
+    audio.onerror = function() {
+        console.warn('[StabCity TTS] Audio play failed for:', entry.url);
+        if (entry.id) {
+            fetch('https://qb-stabcityai/audioFinished', {
+                method: 'POST',
+                body: JSON.stringify({ id: entry.id })
+            }).catch(function() {});
+        }
+        playNext();
+    };
+    audio.play().catch(function(err) {
+        console.warn('[StabCity TTS] Audio play failed:', err);
+        if (entry.id) {
+            fetch('https://qb-stabcityai/audioFinished', {
+                method: 'POST',
+                body: JSON.stringify({ id: entry.id })
+            }).catch(function() {});
+        }
+        playNext();
+    });
+}
+
+window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'playTTS') {
+        audioQueue.push({ url: e.data.url, id: e.data.id || null });
+        if (!isPlaying) {
+            playNext();
+        }
+    }
+});
+</script>
+</body>
+</html>

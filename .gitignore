@@ -1,0 +1,49 @@
+# ─── FiveM Server Binaries ──────────────────────────────────────
+Server/*.exe
+Server/*.dll
+Server/*.crt
+Server/*.key
+Server/components.json
+Server/citizen/
+Server/cache/
+Server/crashes/
+Server/.replxx_history
+
+# ─── FiveM Default Resources ───────────────────────────────────
+Server/resources/\[system\]/
+Server/resources/\[gamemodes\]/
+Server/resources/\[gameplay\]/
+Server/resources/\[managers\]/
+Server/resources/\[test\]/
+
+# ─── QBCore Framework (cloned from GitHub) ─────────────────────
+Server/resources/\[qb\]/
+
+# ─── Standalone Dependencies (cloned/downloaded) ──────────────
+Server/resources/oxmysql/
+Server/resources/PolyZone/
+Server/resources/menuv/
+Server/resources/\[standalone\]/
+
+# ─── Sensitive Files ───────────────────────────────────────────
+Server/server.cfg
+Server/permissions.cfg
+
+# ─── .NET Build Artifacts ──────────────────────────────────────
+AgentBrain/**/bin/
+AgentBrain/**/obj/
+
+# ─── Runtime Data ──────────────────────────────────────────────
+AgentBrain/**/*.db
+AgentBrain/**/*.jsonl
+AgentBrain/**/audio/
+
+# ─── OS / IDE ──────────────────────────────────────────────────
+.vs/
+.vscode/
+.claude/
+*.suo
+*.user
+Thumbs.db
+Desktop.ini
+.DS_Store
