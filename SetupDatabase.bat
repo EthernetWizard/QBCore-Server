@@ -6,7 +6,7 @@ echo.
 echo This will create the 'qbcore' database in MariaDB.
 echo.
 
-set MYSQL_PATH="X:\Program Files\MariaDB 12.2\bin\mysql.exe"
+set MYSQL_PATH="C:\Program Files\MariaDB 12.2\bin\mysql.exe"
 
 echo Enter your MariaDB root password:
 set /p MYSQL_PASS=Password:
